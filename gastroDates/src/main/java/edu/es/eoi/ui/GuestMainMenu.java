@@ -8,19 +8,20 @@ import edu.es.eoi.main.MainApp;
 
 public class GuestMainMenu {
 
-	public static final int PUBLISH = 1;
-	public static final int SEARCH = 2;
+	public static final int PUBLISHRECIPE = 1;
+	public static final int SHOWALLRECIPES = 2;
 	public static final int REGISTER = 3;
 	public static final int EXIT = 4;
+
 	public static final Scanner ESCANER = new Scanner(System.in);
 
 	public static int userOption = 0;
 
-	public static void printMenuGuest(Guest guest) {
+	public static void printGuestMenu(Guest guest) {
 		System.out.println("Bienvenido " + MainApp.guest);
 		System.out.println("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
-		System.out.println(" 1.- Publicar receta" + 
-		"\n 2.- Buscar receta" + "\n 3.- Registrarse" + "\n 4.- Salir");
+		System.out.println(
+				" 1.- Publicar receta" + "\n 2.- Mostrar todas las recetas" + "\n 3.- Registrarse" + "\n 4.- Salir");
 		System.out.println("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
 
 		// Probar que esto funciona
@@ -28,21 +29,25 @@ public class GuestMainMenu {
 			userOption = ESCANER.nextInt();
 		} catch (InputMismatchException e) {
 			System.out.println("La opcion que desea introducir no es correcta, por favor vuelva a intentarlo");
-			GuestMainMenu.printMenuGuest(guest);
+			GuestMainMenu.printGuestMenu(guest);
 		}
 
 		switch (userOption) {
-		case PUBLISH:
+		case PUBLISHRECIPE:
+			RecipeMenu.printPublishRecipeMenu();
 			break;
-		case SEARCH:
+		case SHOWALLRECIPES:
+			RecipeMenu.printAllRecipes();
 			break;
 		case REGISTER:
+			RegisterMenu.printMenuRegister();
 			break;
 		case EXIT:
 			MainApp.guest = null;
-			MenuGeneral.menuGeneralPrint();
+			GeneralMenu.printGeneralMenu();
 			break;
 		}
+		ESCANER.close();
 	}
 
 	public static Guest createGuest(int visitCounter) {

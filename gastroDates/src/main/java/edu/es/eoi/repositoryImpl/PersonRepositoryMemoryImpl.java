@@ -21,7 +21,7 @@ public class PersonRepositoryMemoryImpl implements PersonRepository {
 
 	@Override
 	public void delete(Person e) {
-		MainApp.users.remove(((User)e).getUsername());
+		MainApp.users.remove(((User) e).getUsername());
 	}
 
 	@Override

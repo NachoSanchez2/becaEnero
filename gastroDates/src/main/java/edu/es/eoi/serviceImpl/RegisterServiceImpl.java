@@ -21,6 +21,7 @@ public class RegisterServiceImpl implements RegisterService {
 		repository.save(entity);
 		return (User) entity;
 	}
+	
 	@Override
 	public boolean usernameVerification(String username) {
 		if (MainApp.users.get(username) != null) {

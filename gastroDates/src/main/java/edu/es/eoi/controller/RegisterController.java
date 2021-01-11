@@ -6,12 +6,11 @@ import edu.es.eoi.enums.Gender;
 import edu.es.eoi.main.MainApp;
 import edu.es.eoi.service.RegisterService;
 import edu.es.eoi.serviceImpl.RegisterServiceImpl;
-import edu.es.eoi.ui.UserMainMenu;
 import edu.es.eoi.ui.UserMainMenuWhithoutProfile;
 
 public class RegisterController {
 
-	protected static final RegisterService SERVICE = new RegisterServiceImpl();
+	protected static RegisterService SERVICE = new RegisterServiceImpl();
 
 	public void register(String name, String Surname, Date bdt, String username, String password, String mail,
 			Gender gender, String adress, String phoneNumber) throws Exception {

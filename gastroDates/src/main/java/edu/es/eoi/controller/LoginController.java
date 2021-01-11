@@ -18,7 +18,7 @@ public class LoginController {
 
 		LoginService service = new LoginServiceImpl();
 
-		if (service.login(user, password) != null && service.login(user, password).getProfile() != null) {
+		if (service.login(user, password) != null) {
 			if (service.login(user, password).getProfile() != null) {
 				MainApp.user = service.login(user, password);
 				UserMainMenu.printMenuMain();
