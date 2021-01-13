@@ -2,12 +2,13 @@ package edu.beca.es.eoi.repository;
 
 public interface CrudInterface<E, SEARCH_FIELD> {
 
-	void save(E e);
+	boolean save(E e);
 
 	E read(SEARCH_FIELD sf);
 
 	boolean delete(E e);
 
-	E update(E e);
+	E update(E e, SEARCH_FIELD sf);
 
 }
+	
