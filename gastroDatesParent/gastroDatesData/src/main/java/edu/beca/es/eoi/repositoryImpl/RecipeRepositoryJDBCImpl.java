@@ -14,9 +14,10 @@ import edu.beca.es.eoi.repository.RecipeRepository;
 public class RecipeRepositoryJDBCImpl implements RecipeRepository {
 
 	private Logger logger = Logger.getLogger(RecipeRepositoryJDBCImpl.class);
+	private static final boolean isTEST = false;
 
 	public boolean save(Recipe e) {
-		// TODO: No se meter con algo relacionado;
+		// TODO: Falta hacer el repository save para una receta
 		return false;
 	}
 
@@ -24,7 +25,7 @@ public class RecipeRepositoryJDBCImpl implements RecipeRepository {
 		// Declaracion de variables
 		logger.info("Entramos en el metodo Save");
 		DataManager dataManager = new DataManager();
-		Connection conn = dataManager.getConnection();
+		Connection conn = dataManager.getConnection(isTEST);
 		Recipe recipe = null;
 
 		// Construccion de la peticion
@@ -70,12 +71,44 @@ public class RecipeRepositoryJDBCImpl implements RecipeRepository {
 	}
 
 	public boolean delete(Recipe e) {
-		// TODO Auto-generated method stub
-		return false;
+		// Declaracion de variables
+		logger.info("Entramos en el metodo Save");
+		DataManager dataManager = new DataManager();
+		Connection conn = dataManager.getConnection(isTEST);
+		boolean deleteOK = false;
+
+		// Construccion de la peticion
+		logger.info("Se genera la peticion a BBDD");
+		StringBuilder sql = new StringBuilder();
+		sql.append("DELETE FROM recipe");
+		sql.append(" WHERE id = ?");
+		if (conn != null) {
+			PreparedStatement pst;
+			try {
+				pst = conn.prepareStatement(sql.toString());
+				pst.setInt(1, e.getId());
+				try {
+					int line = pst.executeUpdate();
+					if (line != 0) {
+						deleteOK = true;
+					}
+				} finally {
+					logger.info("Se cierra la peticion a BBDD");
+					pst.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			} finally {
+				logger.info("Se llama al metodo closeConnection");
+				dataManager.closeConnection(conn);
+			}
+		}
+
+		return deleteOK;
 	}
 
 	public Recipe update(Recipe e, String sf) {
-		// TODO Auto-generated method stub
+		// TODO: Falta hacer el repository update para una receta
 		return null;
 	}
 

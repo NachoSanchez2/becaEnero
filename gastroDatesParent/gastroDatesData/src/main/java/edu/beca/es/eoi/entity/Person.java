@@ -10,8 +10,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class Person {
+
 	protected String name;
 	protected String surname;
 //	protected Date birthDate;
 
+	public Person(String name) {
+		this.name = name;
+	}
 }

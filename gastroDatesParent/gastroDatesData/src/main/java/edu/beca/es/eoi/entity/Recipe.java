@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Recipe {
 
-	private String id;
+	private int id;
 	private String recipeName;
 	private String description;
 	private String photo;
@@ -19,7 +19,7 @@ public class Recipe {
 	private double valoration;
 	private List<String> comments;
 
-	public Recipe(String id, String recipeName, String description, String photo, Ingredient ingredients) {
+	public Recipe(int id, String recipeName, String description, String photo, Ingredient ingredients) {
 		this.id = id;
 		this.recipeName = recipeName;
 		this.description = description;
@@ -35,6 +35,10 @@ public class Recipe {
 		this.photo = photo;
 		this.valoration = valoration;
 		this.ingredients = new Ingredient(ingredientName, amount, price);
+	}
+
+	public Recipe(int id) {
+		this.id = id;
 	}
 
 }

@@ -15,20 +15,21 @@ import edu.beca.es.eoi.repository.PersonRepository;
 public class PersonRepositoryJDBCImpl implements PersonRepository {
 
 	private Logger logger = Logger.getLogger(PersonRepositoryJDBCImpl.class);
+	private static final boolean isTEST = false;
 
 	public boolean save(Person e) {
 		// Declaracion de variables
 		logger.info("Entramos en el metodo Save");
 		DataManager dataManager = new DataManager();
-		Connection conn = dataManager.getConnection();
+		Connection conn = dataManager.getConnection(isTEST);
 		boolean saveOK = false;
 
 		// Construccion de la peticion
 		logger.info("Se genera la peticion a BBDD");
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO");
-		sql.append("user(persoName,personSurname,username,pass,mail,address,phoneNumber)");
-		sql.append("VALUES(?,?,?,?,?,?,?)");
+		sql.append(" user(personName,personSurname,username,pass,mail,address,phoneNumber)");
+		sql.append(" VALUES(?,?,?,?,?,?,?)");
 		logger.debug("Peticion a BBDD: " + sql.toString());
 
 		if (conn != null) {
@@ -55,7 +56,7 @@ public class PersonRepositoryJDBCImpl implements PersonRepository {
 					pst.close();
 				}
 			} catch (SQLException ex) {
-				logger.debug("No se ha podido guardar el usuario: " + ex.getStackTrace());
+				ex.printStackTrace();
 			} finally {
 				logger.info("Se llama al metodo closeConnection");
 				dataManager.closeConnection(conn);
@@ -65,7 +66,8 @@ public class PersonRepositoryJDBCImpl implements PersonRepository {
 	}
 
 	public Person update(Person e, String sf) {
-		// TODO: Queda por generar este metodo, no se hacer que se modifique lo que el usuario quiera
+		// TODO: Queda por generar este metodo, no se hacer que se modifique lo que el
+		// usuario quiera
 		return null;
 	}
 
@@ -73,7 +75,7 @@ public class PersonRepositoryJDBCImpl implements PersonRepository {
 		// Declaracion de variables
 		logger.info("Entramos en el metodo Read");
 		DataManager dataManager = new DataManager();
-		Connection conn = dataManager.getConnection();
+		Connection conn = dataManager.getConnection(isTEST);
 		Person e = null;
 
 		// Construccion de la peticion
@@ -120,7 +122,7 @@ public class PersonRepositoryJDBCImpl implements PersonRepository {
 		// Declaracion de variables
 		logger.info("Entramos en el metodo Delete");
 		DataManager dataManager = new DataManager();
-		Connection conn = dataManager.getConnection();
+		Connection conn = dataManager.getConnection(isTEST);
 		boolean deleteOK = false;
 
 		// Construccion de la peticion

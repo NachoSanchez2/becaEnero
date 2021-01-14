@@ -17,12 +17,13 @@ import lombok.Setter;
 @Setter
 public class DataManager {
 	private Properties properties = new Properties();
-	String dbUrl;
-	String dbUsuario;
-	String dbPass;
-	Logger logger = Logger.getLogger(DataManager.class);
+	private String dbUrl;
+	private String dbUsuario;
+	private String dbPass;
+	private Logger logger = Logger.getLogger(DataManager.class);
+	private boolean isTEST = false;
 
-	public Connection getConnection() {
+	public Connection getConnection(boolean isTEST) {
 		logger.info("Entro en el metodo getConnection");
 		logger.info("llamo al metodo propertiesAplicate");
 		propertiesAplicate();
@@ -33,7 +34,11 @@ public class DataManager {
 				+ getDbPass());
 		try {
 			conn = DriverManager.getConnection(getDbUrl(), getDbUsuario(), getDbPass());
-			conn.setAutoCommit(false);
+			if (isTEST) {
+				conn.setAutoCommit(false);
+			} else {
+				conn.setAutoCommit(true);
+			}
 		} catch (SQLException e) {
 			logger.debug("Could not connect to DB: " + e.getStackTrace());
 		}

@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class User extends Person {
+	private int idUser;
 	private String username;
 	private String password;
 	private String mail;
@@ -31,6 +32,16 @@ public class User extends Person {
 
 	public User(String name, String surname, String username, String mail, String address, String phoneNumber) {
 		super(name, surname);
+	}
+
+	public User(int idUser) {
+		this.idUser = idUser;
+	}
+
+	public User(String personName, String mail, String phoneNumber) {
+		super(personName);
+		this.mail = mail;
+		this.phoneNumber = phoneNumber;
 	}
 
 }
