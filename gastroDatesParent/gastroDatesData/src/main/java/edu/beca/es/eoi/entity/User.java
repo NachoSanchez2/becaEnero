@@ -1,7 +1,5 @@
 package edu.beca.es.eoi.entity;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +15,7 @@ public class User extends Person {
 //	private String gender;
 	private String address;
 	private String phoneNumber;
-	private List<Recipe> recipes;
+	private Recipe recipes;
 	private Profile profile;
 
 	public User(String name, String surname, String username, String password, String mail, String address,
@@ -32,6 +30,10 @@ public class User extends Person {
 
 	public User(String name, String surname, String username, String mail, String address, String phoneNumber) {
 		super(name, surname);
+		this.username = username;
+		this.mail = mail;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
 	}
 
 	public User(int idUser) {
@@ -41,6 +43,16 @@ public class User extends Person {
 	public User(String personName, String mail, String phoneNumber) {
 		super(personName);
 		this.mail = mail;
+		this.phoneNumber = phoneNumber;
+	}
+
+	public User(int idUser, String name, String surname, String username, String password, String mail, String address,
+			String phoneNumber) {
+		super(name, surname);
+		this.username = username;
+		this.password = password;
+		this.mail = mail;
+		this.address = address;
 		this.phoneNumber = phoneNumber;
 	}
 

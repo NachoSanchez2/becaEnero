@@ -17,13 +17,52 @@ public class RecipeRepositoryJDBCImpl implements RecipeRepository {
 	private static final boolean isTEST = false;
 
 	public boolean save(Recipe e) {
-		// TODO: Falta hacer el repository save para una receta
-		return false;
+		// Declaracion de variables
+		logger.info("Entramos en el metodo save");
+		DataManager dataManager = new DataManager();
+		Connection conn = dataManager.getConnection(isTEST);
+		boolean saveOK = false;
+
+		// Construccion de la peticion
+		logger.info("Se genera la peticion a BBDD");
+		StringBuilder sql = new StringBuilder();
+		sql.append("INSERT INTO");
+		sql.append(" recipe(recipeName,recipeDescription,photo,valoration)");
+		sql.append(" VALUES(?,?,?,?)");
+		logger.debug("Peticion a BBDD: " + sql.toString());
+
+		if (conn != null) {
+			try {
+				logger.info("Se perpara la peticion");
+				PreparedStatement pst = conn.prepareStatement(sql.toString());
+				pst.setString(1, e.getRecipeName());
+				pst.setString(2, e.getRecipeDescription());
+				pst.setString(3, e.getPhoto());
+				pst.setDouble(4, e.getValoration());
+
+				try {
+					logger.info("Se ejecuta la peticion");
+					int line = pst.executeUpdate();
+					if (line != 0) {
+						saveOK = true;
+					}
+				} finally {
+					logger.info("Se cierra la peticion a BBDD");
+					pst.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			} finally {
+				logger.info("Se llama al metodo closeConnection");
+				dataManager.closeConnection(conn);
+			}
+		}
+		return saveOK;
 	}
 
 	public Recipe read(String sf) {
 		// Declaracion de variables
-		logger.info("Entramos en el metodo Save");
+		logger.info("Entramos en el metodo read");
 		DataManager dataManager = new DataManager();
 		Connection conn = dataManager.getConnection(isTEST);
 		Recipe recipe = null;
@@ -31,7 +70,7 @@ public class RecipeRepositoryJDBCImpl implements RecipeRepository {
 		// Construccion de la peticion
 		logger.info("Se genera la peticion a BBDD");
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT r.recipeName,r.recipeDescription,r.url,r.valoration,");
+		sql.append("SELECT r.recipeName,r.recipeDescription,r.photo,r.valoration,");
 		sql.append("i.ingredientName,i.amount,i.price");
 		sql.append(" FROM recipe r JOIN ingredient i");
 		sql.append(" ON i.id = r.id");
@@ -48,10 +87,10 @@ public class RecipeRepositoryJDBCImpl implements RecipeRepository {
 					ResultSet rs = pst.executeQuery();
 					while (rs.next()) {
 						recipe = new Recipe(rs.getString("recipeName"), rs.getString("recipeDescription"),
-								rs.getString("url"), rs.getDouble("valoration"), rs.getString("ingredientName"),
+								rs.getString("photo"), rs.getDouble("valoration"), rs.getString("ingredientName"),
 								rs.getDouble("amount"), rs.getDouble("price"));
 						logger.debug("RECETA: Nombre: " + recipe.getRecipeName() + "Description: "
-								+ recipe.getDescription() + "Valoration: " + recipe.getValoration()
+								+ recipe.getRecipeDescription() + "Valoration: " + recipe.getValoration()
 								+ "INGREDIENTE: NombreIngrediente: " + recipe.getIngredients().getName() + " Amount: "
 								+ recipe.getIngredients().getAmount() + " Price: "
 								+ recipe.getIngredients().getPrice());
@@ -61,7 +100,7 @@ public class RecipeRepositoryJDBCImpl implements RecipeRepository {
 					pst.close();
 				}
 			} catch (SQLException ex) {
-				logger.debug("No se ha podido guardar el usuario: " + ex.getStackTrace());
+				ex.printStackTrace();
 			} finally {
 				logger.info("Se llama al metodo closeConnection");
 				dataManager.closeConnection(conn);
@@ -72,7 +111,7 @@ public class RecipeRepositoryJDBCImpl implements RecipeRepository {
 
 	public boolean delete(Recipe e) {
 		// Declaracion de variables
-		logger.info("Entramos en el metodo Save");
+		logger.info("Entramos en el metodo delete");
 		DataManager dataManager = new DataManager();
 		Connection conn = dataManager.getConnection(isTEST);
 		boolean deleteOK = false;
@@ -107,9 +146,50 @@ public class RecipeRepositoryJDBCImpl implements RecipeRepository {
 		return deleteOK;
 	}
 
-	public Recipe update(Recipe e, String sf) {
-		// TODO: Falta hacer el repository update para una receta
-		return null;
+	public boolean update(Recipe e, int id) {
+
+		// Declaracion de variables
+		logger.info("Entramos en el metodo update");
+		DataManager dataManager = new DataManager();
+		Connection conn = dataManager.getConnection(isTEST);
+		boolean updateOK = false;
+
+		// Construccion de la peticion
+		logger.info("Se genera la peticion a BBDD");
+		StringBuilder sql = new StringBuilder();
+		sql.append("UPDATE recipe ");
+		sql.append("SET recipeName = ?, recipeDescription = ?, photo = ? , valoration = ? ");
+		sql.append("WHERE id = ?");
+		logger.debug("Peticion a BBDD: " + sql.toString());
+
+		if (conn != null) {
+			try {
+				logger.info("Se perpara la peticion");
+				PreparedStatement pst = conn.prepareStatement(sql.toString());
+				pst.setString(1, e.getRecipeName());
+				pst.setString(2, e.getRecipeDescription());
+				pst.setString(3, e.getPhoto());
+				pst.setDouble(4, e.getValoration());
+				pst.setInt(5, id);
+
+				try {
+					logger.info("Se ejecuta la peticion");
+					int line = pst.executeUpdate();
+					if (line != 0) {
+						updateOK = true;
+					}
+				} finally {
+					logger.info("Se cierra la peticion a BBDD");
+					pst.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			} finally {
+				logger.info("Se llama al metodo closeConnection");
+				dataManager.closeConnection(conn);
+			}
+		}
+		return updateOK;
 	}
 
 }

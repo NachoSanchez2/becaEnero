@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Ingredient {
 
-	private String id;
+	private int id;
 	private String name;
 	private double amount;
 	private double price;
@@ -20,6 +20,10 @@ public class Ingredient {
 		this.name = name;
 		this.amount = amount;
 		this.price = price;
+	}
+
+	public Ingredient(int id) {
+		this.id = id;
 	}
 
 }

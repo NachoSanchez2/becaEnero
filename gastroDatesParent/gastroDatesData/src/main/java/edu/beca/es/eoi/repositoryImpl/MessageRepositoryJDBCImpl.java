@@ -125,7 +125,6 @@ public class MessageRepositoryJDBCImpl implements MessageRepository {
 		return message;
 	}
 
-	@SuppressWarnings("null")
 	public List<Message> readAllMessageIsReaded(Person e, boolean mStatement) {
 		// Declaracion de variables
 		logger.info("Entramos en el metodo Save");
