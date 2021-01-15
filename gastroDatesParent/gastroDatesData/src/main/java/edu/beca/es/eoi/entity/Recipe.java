@@ -26,15 +26,6 @@ public class Recipe {
 
 	}
 
-	public Recipe(String recipeName, String recipeDescription, String photo, double valoration, String ingredientName,
-			double amount, double price) {
-		this.recipeName = recipeName;
-		this.recipeDescription = recipeDescription;
-		this.photo = photo;
-		this.valoration = valoration;
-		this.ingredients = new Ingredient(ingredientName, amount, price);
-	}
-
 	public Recipe(int id) {
 		this.id = id;
 	}
@@ -53,4 +44,5 @@ public class Recipe {
 		this.photo = photo;
 		this.valoration = valoration;
 	}
+
 }

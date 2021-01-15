@@ -1,16 +1,16 @@
 package edu.beca.es.eoi.service;
 
-import java.util.Set;
-
-import edu.beca.es.eoi.entity.Ingredient;
 import edu.beca.es.eoi.entity.Recipe;
 
 public interface RecipeService {
 
-	void publishRecipe(String id,String recipeName, String description, String photo,Set<Ingredient>ingredients);
+	boolean saveRecipe(int id, String recipeName, String description, String photo, double Valoration);
 
-	void shareRecipe(Recipe recipe);
+	boolean deleteRecipe(String recipeName);
 
-	void valorateRecipe();
+	boolean updateRecipe(int id, String newRecipeName, String newDescriptionRecipe, String newPhoto,
+			double newValoration);
+
+	Recipe readRecipe(String recipeName);
 
 }

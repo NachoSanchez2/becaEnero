@@ -1,5 +1,6 @@
 package edu.beca.es.eoi.controller;
 
+import edu.beca.es.eoi.entity.User;
 import edu.beca.es.eoi.main.MainApp;
 import edu.beca.es.eoi.service.LoginService;
 import edu.beca.es.eoi.serviceImpl.LoginServiceImpl;
@@ -18,11 +19,10 @@ public class LoginController {
 		}
 
 		if (SERVICE.login(user, password) != null) {
-			if (SERVICE.login(user, password).getProfile() != null) {
-				MainApp.user = SERVICE.login(user, password);
+			if (((User) SERVICE.login(user, password)).getProfile() != null) {
 				UserMainMenu.printMenuMain();
 			} else {
-				MainApp.user = SERVICE.login(user, password);
+				MainApp.user = (User) SERVICE.login(user, password);
 				UserMainMenuWhithoutProfile.printMenuMain();
 			}
 		} else {

@@ -142,6 +142,7 @@ public class PersonRepositoryJDBCImpl implements PersonRepository {
 						e = new User(rs.getString("personName"), rs.getString("personSurname"),
 								rs.getString("username"), rs.getString("mail"), rs.getString("address"),
 								rs.getString("phoneNumber"));
+
 						logger.debug("El usuario encontrado es: " + "NAME: " + ((User) e).getName() + "SURNAME: "
 								+ ((User) e).getSurname() + "USERNAME: " + ((User) e).getUsername() + "MAIL: "
 								+ ((User) e).getMail() + "ADDRESS: " + ((User) e).getAddress() + "PHONENUMBER: "

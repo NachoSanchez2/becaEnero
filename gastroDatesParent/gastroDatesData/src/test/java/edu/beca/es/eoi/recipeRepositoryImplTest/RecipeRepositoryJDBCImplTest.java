@@ -27,7 +27,7 @@ class RecipeRepositoryJDBCImplTest {
 		Recipe recipe = new Recipe(18);
 		Recipe recipeTest = new Recipe("Macarrones con queso", "Macarrones con queso parmesano", "askdgjaksdgn", 10.0);
 		RecipeRepository repository = new RecipeRepositoryJDBCImpl();
-		
+
 		// Asserts
 		assertTrue(repository.update(recipeTest, recipe.getId()));
 	}
