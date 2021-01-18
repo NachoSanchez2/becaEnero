@@ -3,6 +3,8 @@ package edu.beca.es.eoi.ui;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import edu.beca.es.eoi.main.MainApp;
 
 public class UserMainMenu {
@@ -16,55 +18,53 @@ public class UserMainMenu {
 	public static final int EXIT = 7;
 	public static final Scanner ESCANER = new Scanner(System.in);
 
+	public static Logger logger = Logger.getLogger(GeneralMenu.class);
 	public static int opcionUsuario;
 
 	public static void printMenuMain() {
+		logger.info("Entra en el menu general con perfil");
 		System.out.println("Bienvenido " + MainApp.user.getName() + " al menu principal de GastroDates");
 		System.out.println("***********************************************************************************");
 		System.out.println(" 1.- Publicar receta");
-		System.out.println(" 2.- Compartir receta");
-		System.out.println(" 3.- Valorar receta");
-		System.out.println(" 4.- Ver todas las recetas");
-		System.out.println(" 5.- Comprobar Match");
-		System.out.println(" 6.- Modificar perfil");
-		System.out.println(" 7.- Cerrar session");
+		System.out.println(" 2.- Valorar receta");
+		System.out.println(" 3.- Ver todas las recetas");
+		System.out.println(" 4.- Modificar perfil");
+		System.out.println(" 5.- Cerrar session");
 		System.out.println("***********************************************************************************");
 
 		try {
 			opcionUsuario = ESCANER.nextInt();
 		} catch (InputMismatchException e) {
-			System.out.println("La opcion elegida no es valida, por favor intÃ©ntelo de nuevo");
+			logger.debug("La opcion elegida no es valida, por favor intentelo de nuevo");
 			UserMainMenu.printMenuMain();
 		}
 
 		switch (opcionUsuario) {
 
 		case PUBLISHRECIPE:
-//			RecipeMenu.printPublishRecipeMenu();
+			logger.info("Entra en la opcion publicar receta");
+			RecipeMenu.printPublishRecipeMenu();
 			UserMainMenu.printMenuMain();
 			break;
 
-		case SHARERECIPE:
-//			RecipeMenu.printShareRecipeMenu();
-			UserMainMenu.printMenuMain();
-			break;
 		case VALORATERECIPE:
-//			RecipeMenu.printValorateRecipeMenu();
+			logger.info("Entra en la opcion valorar receta");
+			RecipeMenu.printValorateRecipeMenu();
 			UserMainMenu.printMenuMain();
 			break;
 		case SHOWRECIPES:
-//			RecipeMenu.printAllRecipes();
+			logger.info("Entra en la opcion enseñar recetas");
+			RecipeMenu.printAllRecipes();
 			UserMainMenu.printMenuMain();
-			break;
-		case MATCH:
-
 			break;
 
 		case UPDATEPERFIL:
-
+			logger.info("Entra en la opcion modificar perfil");
+			SaveProfileMenu.printUploadProfileMenu();
 			break;
 
 		case EXIT:
+			logger.info("Sale de las opciones");
 			MainApp.user = null;
 			GeneralMenu.printGeneralMenu();
 			break;

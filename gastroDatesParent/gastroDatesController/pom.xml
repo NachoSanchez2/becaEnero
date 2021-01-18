@@ -31,15 +31,15 @@
 			<artifactId>gastroDatesServices</artifactId>
 		</dependency>
 		<dependency>
+	<groupId>edu.beca.es.eoi</groupId>
+	<artifactId>gastroDatesUI</artifactId>
+	<exclusions>
+		<exclusion>
 			<groupId>edu.beca.es.eoi</groupId>
-			<artifactId>gastroDatesUI</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>edu.beca.es.eoi</groupId>
-					<artifactId>gastroDatesController</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+			<artifactId>gastroDatesController</artifactId>
+		</exclusion>
+	</exclusions>
+</dependency>
 	</dependencies>
 	<build>
 		<finalName>gastroDatesApp</finalName>

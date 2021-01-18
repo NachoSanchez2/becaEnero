@@ -2,29 +2,31 @@ package edu.beca.es.eoi.ui;
 
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import edu.beca.es.eoi.controller.LoginController;
 
 public class LoginMenu {
-
+	// TODO: Faltan los test de LoginMenu
 	public static final Scanner ESCANER = new Scanner(System.in);
+	public static final LoginController CONTROLLER = new LoginController();
+
+	public static Logger logger = Logger.getLogger(LoginMenu.class);
 
 	public static void printMenuLogin() {
 
-		LoginController controller = new LoginController();
-
 		System.out.println("Bienvenido al menu Login de GastroDates");
-		System.out.println(
-				"♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
+		System.out.println("***************************************");
 		System.out.println("Introduzca nombre de usuario: ");
 		String user = ESCANER.nextLine();
 
-		System.out.println("Introduzca la contraseña: ");
+		System.out.println("Introduzca la contrase�a: ");
 		String password = ESCANER.nextLine();
 
 		try {
-			controller.login(user, password);
+			CONTROLLER.login(user, password);
 		} catch (Exception e) {
-			System.out.println("Error en la longitud minima del password");
+			logger.debug("Se ha producido un error,la longitud de la contrase�a no es v�lida");
 			printMenuLogin();
 		}
 		ESCANER.close();

@@ -43,4 +43,20 @@ public class Message {
 		this.message = message;
 	}
 
+	public Message(User origin, User destination, String message, boolean readed) {
+		this.origin = origin;
+		this.destination = destination;
+		this.message = message;
+		this.readed = readed;
+
+	}
+
+	public Message(int id, User origen, User destination, String message, java.sql.Date date) {
+		this.id = id;
+		this.origin = origen;
+		this.destination = destination;
+		this.message = message;
+		this.date = new Date(date.getTime());
+	}
+
 }

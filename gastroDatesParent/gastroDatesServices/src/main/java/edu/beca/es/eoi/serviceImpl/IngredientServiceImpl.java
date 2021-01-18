@@ -8,11 +8,11 @@ import edu.beca.es.eoi.service.IngredientService;
 public class IngredientServiceImpl implements IngredientService {
 
 	@Override
-	public boolean save(String ingredientName, double amount, double price, int idRecipe) {
+	public boolean save(Ingredient ingredient, int idRecipe) {
 
 		// Declaration
 		IngredientRepository repository = new IngredientRepositoryJDBCImpl();
-		Ingredient ingredient = new Ingredient(ingredientName, amount, price, idRecipe);
+		ingredient.setIdRecipe(idRecipe);
 
 		// Implementation
 		boolean saveOK = repository.save(ingredient);
@@ -21,10 +21,10 @@ public class IngredientServiceImpl implements IngredientService {
 	}
 
 	@Override
-	public boolean update(int id, String newingredientName, double newAmount, double newPrice, int newIdRecipe) {
+	public boolean update(int id, String newingredientName, double newAmount, double newPrice) {
 
 		// Declaration
-		Ingredient newIngredient = new Ingredient(newingredientName, newAmount, newPrice, newIdRecipe);
+		Ingredient newIngredient = new Ingredient(newingredientName, newAmount, newPrice, id);
 		IngredientRepository repository = new IngredientRepositoryJDBCImpl();
 
 		// Implementation

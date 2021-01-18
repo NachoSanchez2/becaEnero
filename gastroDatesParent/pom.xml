@@ -76,13 +76,6 @@
 				<groupId>edu.beca.es.eoi</groupId>
 				<artifactId>gastroDatesUI</artifactId>
 				<version>${ui.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>edu.beca.es.eoi</groupId>
-						<artifactId>gastroDatesController</artifactId>
-						<version>${controller.version}</version>
-					</exclusion>
-				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>edu.beca.es.eoi</groupId>

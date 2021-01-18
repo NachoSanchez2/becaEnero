@@ -3,6 +3,8 @@ package edu.beca.es.eoi.messageRepositoryImplTest;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -24,8 +26,11 @@ class MessageRepositoryJDBCImplTest {
 		Message message = new Message(((User) origin), ((User) destination), "HEY", null, false);
 		MessageRepository repository = new MessageRepositoryJDBCImpl();
 
+		java.util.Date date = Calendar.getInstance().getTime();
+		Date dateSql = new Date(date.getTime());
+
 		// Asserts
-		assertTrue(repository.save(message));
+		assertTrue(repository.save(message, dateSql));
 
 	}
 
@@ -48,12 +53,11 @@ class MessageRepositoryJDBCImplTest {
 
 		// TestPrepare
 		Person destination = new User("pepe", "pepe", "pepe", "pepe", "pepe@gmail.com", "av/pepe", "pepe12345");
-		Message message = null;
 		MessageRepository repository = new MessageRepositoryJDBCImpl();
-		message = repository.readAllMessageFromUser(destination);
+		List<Message> messages = repository.readAllMessageFromUser(destination);
 
 		// Assert
-		assertNotNull(message);
+		assertNotNull(messages);
 
 	}
 

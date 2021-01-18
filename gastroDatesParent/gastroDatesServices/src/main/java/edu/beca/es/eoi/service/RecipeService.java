@@ -1,10 +1,12 @@
 package edu.beca.es.eoi.service;
 
+import java.util.List;
+
 import edu.beca.es.eoi.entity.Recipe;
 
 public interface RecipeService {
 
-	boolean saveRecipe(int id, String recipeName, String description, String photo, double Valoration);
+	int saveRecipe(Recipe recipe);
 
 	boolean deleteRecipe(String recipeName);
 
@@ -12,5 +14,7 @@ public interface RecipeService {
 			double newValoration);
 
 	Recipe readRecipe(String recipeName);
+
+	List<Recipe> readAll();
 
 }

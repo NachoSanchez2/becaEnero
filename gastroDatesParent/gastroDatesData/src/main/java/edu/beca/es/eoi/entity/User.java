@@ -56,4 +56,12 @@ public class User extends Person {
 		this.phoneNumber = phoneNumber;
 	}
 
+	public User(String username, String mail, String address, String phoneNumber) {
+		this.username = username;
+		this.mail = mail;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+
+	}
+
 }

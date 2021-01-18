@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -27,8 +29,8 @@ public class RecipeRepositoryJDBCImpl implements RecipeRepository {
 		logger.info("Se genera la peticion a BBDD");
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO");
-		sql.append(" recipe(recipeName,recipeDescription,photo,valoration)");
-		sql.append(" VALUES(?,?,?,?)");
+		sql.append(" recipe(recipeName,recipeDescription,photo,valoration,idUser)");
+		sql.append(" VALUES(?,?,?,?,?)");
 		logger.debug("Peticion a BBDD: " + sql.toString());
 
 		if (conn != null) {
@@ -39,6 +41,7 @@ public class RecipeRepositoryJDBCImpl implements RecipeRepository {
 				pst.setString(2, e.getRecipeDescription());
 				pst.setString(3, e.getPhoto());
 				pst.setDouble(4, e.getValoration());
+				pst.setInt(5, e.getIdUser());
 
 				try {
 					logger.info("Se ejecuta la peticion");
@@ -100,6 +103,50 @@ public class RecipeRepositoryJDBCImpl implements RecipeRepository {
 			}
 		}
 		return recipe;
+	}
+
+	// TODO: test readAll
+	public List<Recipe> readAll() {
+		// Declaracion de variables
+		logger.info("Entramos en el metodo save");
+		DataManager dataManager = new DataManager();
+		Connection conn = dataManager.getConnection(isTEST);
+		List<Recipe> recipes = new ArrayList<Recipe>();
+
+		// Construccion de la peticion
+		logger.info("Se genera la peticion a BBDD");
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT r.recipeName,r.recipeDescription,r.photo,r.valoration,");
+		sql.append(" u.username,u.mail,u.phoneNumber FROM recipe r");
+		sql.append(" JOIN user u ON r.idUser = u.idUser");
+		logger.debug("Peticion a BBDD: " + sql.toString());
+
+		if (conn != null) {
+			try {
+				logger.info("Se perpara la peticion");
+				PreparedStatement pst = conn.prepareStatement(sql.toString());
+
+				try {
+					logger.info("Se ejecuta la peticion");
+					ResultSet rs = pst.executeQuery();
+
+					while (rs.next()) {
+						recipes.add(new Recipe(rs.getString("recipeName"), rs.getString("recipeDescription"),
+								rs.getString("photo"), rs.getDouble("valoration"), rs.getInt("idUser")));
+					}
+
+				} finally {
+					logger.info("Se cierra la peticion a BBDD");
+					pst.close();
+				}
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			} finally {
+				logger.info("Se llama al metodo closeConnection");
+				dataManager.closeConnection(conn);
+			}
+		}
+		return recipes;
 	}
 
 	public boolean delete(Recipe e) {

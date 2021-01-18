@@ -8,13 +8,14 @@ import edu.beca.es.eoi.ui.LoginMenu;
 import edu.beca.es.eoi.ui.UserMainMenu;
 import edu.beca.es.eoi.ui.UserMainMenuWhithoutProfile;
 
+//TODO: Hacer test para el controlador de Login, add Logger;
 //Controlador o intermediario entra la logica de empresa y la peticion del usuario
 public class LoginController {
 	public static final LoginService SERVICE = new LoginServiceImpl();
 
 	public void login(String user, String password) throws Exception {
 
-		if (password.length() <= 4) {
+		if (password.length() <= 2) {
 			throw new Exception("Formato de password incorrecto");
 		}
 

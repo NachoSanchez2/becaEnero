@@ -1,5 +1,7 @@
 package edu.beca.es.eoi.serviceImpl;
 
+import java.util.List;
+
 import edu.beca.es.eoi.entity.Recipe;
 import edu.beca.es.eoi.repository.RecipeRepository;
 import edu.beca.es.eoi.repositoryImpl.RecipeRepositoryJDBCImpl;
@@ -7,16 +9,21 @@ import edu.beca.es.eoi.service.RecipeService;
 
 public class RecipeServiceImpl implements RecipeService {
 
+	private static final RecipeRepository REPOSITORY = new RecipeRepositoryJDBCImpl();
+
 	@Override
-	public boolean saveRecipe(int id, String recipeName, String description, String photo, double valoration) {
+	public int saveRecipe(Recipe recipe) {
 
 		// Declaration
-		RecipeRepository repository = new RecipeRepositoryJDBCImpl();
-		Recipe recipe = new Recipe(id, recipeName, description, photo, valoration);
 
+		boolean saveOK = false;
+		int idRecipe = 0;
 		// Implementation
-		boolean saveOK = repository.save(recipe);
-		return saveOK;
+		saveOK = REPOSITORY.save(recipe);
+		if (saveOK) {
+			idRecipe = REPOSITORY.read(recipe.getRecipeName()).getId();
+		}
+		return idRecipe;
 	}
 
 	@Override
@@ -57,4 +64,7 @@ public class RecipeServiceImpl implements RecipeService {
 
 	}
 
+	public List<Recipe> readAll() {
+		return REPOSITORY.readAll();
+	}
 }

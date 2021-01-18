@@ -8,12 +8,12 @@ import edu.beca.es.eoi.service.LoginService;
 //Implementacion de la logica de empresa
 public class LoginServiceImpl implements LoginService {
 
+	public static final PersonRepository REPOSITORY = new PersonRepositoryJDBCImpl();
+
 	@Override
 	public User login(String user, String password) {
 
-		PersonRepository repository = new PersonRepositoryJDBCImpl();
-
-		User entity = (User) repository.read(user);
+		User entity = (User) REPOSITORY.read(user);
 
 		if (entity != null && entity.getPassword().equals(password)) {
 			return entity;
@@ -22,4 +22,12 @@ public class LoginServiceImpl implements LoginService {
 		}
 	}
 
+	public User read(String username) {
+		User entity = (User) REPOSITORY.read(username);
+		if (entity != null) {
+			return entity;
+		} else {
+			return null;
+		}
+	}
 }

@@ -3,6 +3,8 @@ package edu.beca.es.eoi.ui;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 public class GeneralMenu {
 	// Constantes
 	public static final int GUEST = 1;
@@ -10,6 +12,7 @@ public class GeneralMenu {
 	public static final int REGISTER = 3;
 
 	public static final Scanner ESCANER = new Scanner(System.in);
+	public static Logger logger = Logger.getLogger(GeneralMenu.class);
 
 	// Declaracion de variables estaticas
 	public static int visitCounter = 0;
@@ -17,29 +20,32 @@ public class GeneralMenu {
 
 	public static void printGeneralMenu() {
 		System.out.println("  Bienvenido a GASTRODATE  ");
-		System.out.println("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
+		System.out.println("***************************");
 		System.out.println(" 1.- Seguir como invitado");
 		System.out.println(" 2.- Entrar");
 		System.out.println(" 3.- Registrarse");
-		System.out.println("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
+		System.out.println("***************************");
 
 		// Hay que probar esta parte
 		try {
 			userOption = ESCANER.nextInt();
 		} catch (InputMismatchException e) {
-			System.out.println("La opcion introducida no es correcta, porfavor vuelva a intentarlo");
+			logger.debug("La opcion introducida no es correcta, porfavor vuelva a intentarlo");
 			GeneralMenu.printGeneralMenu();
 		}
 
 		switch (userOption) {
 		case GUEST:
+			logger.info("Entro en la opcion GUEST");
 			visitCounter++;
 			GuestMainMenu.printGuestMenu(GuestMainMenu.createGuest(visitCounter));
 			break;
 		case LOGIN:
+			logger.info("Entro en la opcion LOGIN");
 			LoginMenu.printMenuLogin();
 			break;
 		case REGISTER:
+			logger.info("Entro en la opcion REGISTER");
 			RegisterMenu.printMenuRegister();
 			break;
 		}

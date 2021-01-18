@@ -32,7 +32,7 @@
 			<artifactId>gastroDatesController</artifactId>
 			<exclusions>
 				<exclusion>
-					<groupId>edu.beca.es.eoi</groupId>
+					<groupId> edu.beca.es.eoi</groupId>
 					<artifactId>gastroDatesUI</artifactId>
 				</exclusion>
 			</exclusions>

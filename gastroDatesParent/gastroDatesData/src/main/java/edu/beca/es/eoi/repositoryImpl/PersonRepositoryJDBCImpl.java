@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -160,6 +162,91 @@ public class PersonRepositoryJDBCImpl implements PersonRepository {
 			}
 		}
 		return e;
+	}
+
+	// TODO:test readById
+	public Person readById(int id) {
+		// Declaracion de variables
+		logger.info("Entramos en el metodo Read");
+		DataManager dataManager = new DataManager();
+		Connection conn = dataManager.getConnection(isTEST);
+		Person e = null;
+
+		// Construccion de la peticion
+		logger.info("Se genera la peticion a BBDD");
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT username,mail,address,phoneNumber ");
+		sql.append("FROM user WHERE ");
+		sql.append("idUser = ?");
+		logger.debug("Peticion a BBDD: " + sql.toString());
+
+		if (conn != null) {
+			try {
+				logger.info("Se perpara la peticion");
+				PreparedStatement pst = conn.prepareStatement(sql.toString());
+				pst.setInt(1, id);
+
+				try {
+					logger.info("Se ejecuta la peticion");
+					ResultSet rs = pst.executeQuery();
+					while (rs.next()) {
+						e = new User(rs.getString("username"), rs.getString("mail"), rs.getString("address"),
+								rs.getString("phoneNumber"));
+
+						logger.debug("El usuario encontrado es: USERNAME: " + ((User) e).getUsername() + "MAIL: "
+								+ ((User) e).getMail() + "ADDRESS: " + ((User) e).getAddress() + "PHONENUMBER: "
+								+ ((User) e).getPhoneNumber());
+					}
+				} finally {
+					logger.info("Se cierra la peticion a BBDD");
+					pst.close();
+				}
+			} catch (SQLException ex) {
+				logger.debug("No se ha podido guardar el usuario: " + ex.getStackTrace());
+			} finally {
+				logger.info("Se llama al metodo closeConnection");
+				dataManager.closeConnection(conn);
+			}
+		}
+		return e;
+	}
+
+	// TODO: test de readAll
+	public List<String> readAll() {
+		// Declaracion de variables
+		logger.info("Entramos en el metodo Read");
+		DataManager dataManager = new DataManager();
+		Connection conn = dataManager.getConnection(isTEST);
+		List<String> usernames = new ArrayList<String>();
+
+		// Construccion de la peticion
+		logger.info("Se genera la peticion a BBDD");
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT username FROM user ");
+		logger.debug("Peticion a BBDD: " + sql.toString());
+
+		if (conn != null) {
+			try {
+				logger.info("Se perpara la peticion");
+				PreparedStatement pst = conn.prepareStatement(sql.toString());
+				try {
+					logger.info("Se ejecuta la peticion");
+					ResultSet rs = pst.executeQuery();
+					while (rs.next()) {
+						usernames.add(rs.getString("username"));
+					}
+				} finally {
+					logger.info("Se cierra la peticion a BBDD");
+					pst.close();
+				}
+			} catch (SQLException ex) {
+				logger.debug("No se ha podido guardar el usuario: " + ex.getStackTrace());
+			} finally {
+				logger.info("Se llama al metodo closeConnection");
+				dataManager.closeConnection(conn);
+			}
+		}
+		return usernames;
 	}
 
 	public boolean delete(Person e) {

@@ -10,6 +10,7 @@ import lombok.Setter;
 public class Recipe {
 
 	private int id;
+	private int idUser;
 	private String recipeName;
 	private String recipeDescription;
 	private String photo;
@@ -43,6 +44,14 @@ public class Recipe {
 		this.recipeDescription = recipeDescription;
 		this.photo = photo;
 		this.valoration = valoration;
+	}
+
+	public Recipe(String recipeName, String recipeDescription, String photo, double valoration, int idUser) {
+		this.recipeName = recipeName;
+		this.recipeDescription = recipeDescription;
+		this.photo = photo;
+		this.valoration = valoration;
+		this.idUser = idUser;
 	}
 
 }
